@@ -1,2 +1,2 @@
-# little-push-app
+# LittlePush.app
 A habit and productivity tracker.
