@@ -27,10 +27,10 @@ app.use(session(sessionSettings))
 
 new Auth(app);
 
-app.get('/', (req, res) => {
-    res.json({
-        message: 'success'
-    });
+app.use(Express.static(resolve(process.cwd(), '../app/build/')));
+
+app.get('/*', (req, res) => {
+    res.sendFile(resolve(process.cwd(), '../app/build/index.html'));
 });
 
 app.listen(8080);
