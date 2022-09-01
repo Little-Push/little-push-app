@@ -18,6 +18,9 @@ const config = {
         open: true,
         devMiddleware: {
           writeToDisk: true
+        },
+        proxy: {
+            '/': 'http://localhost:8080'
         }
     },
     resolve: {
@@ -35,8 +38,8 @@ const config = {
                 ]
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                test: /\.s?css$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
                 test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
