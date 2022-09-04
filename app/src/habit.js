@@ -1,13 +1,23 @@
 import React from 'react';
+import { HabitModel } from './models/habit.js';
 
 class Habit extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      habit: null
+    };
+  }
+
+  componentDidMount () {
+    this.habit = new HabitModel(this, 'habit');
   }
 
   render () {
+    if (!this.state.habit) {
+      return null;
+    }
     return (
       <>
         <section className='d-flex flex-column justify-content-center align-items-center'>
@@ -15,19 +25,40 @@ class Habit extends React.Component {
           <form className='col-3'>
             <div className='mb-3'>
               <label className='form-label'>Habit:</label>
-              <input className='form-control' type='text' required />
+              <input
+                className='form-control'
+                type='text'
+                required
+                value={this.habit.name}
+                onChange={e => this.habit.name = e.target.value}
+              />
             </div>
             <div className='mb-3'>
               <label className='form-label'>Description:</label>
-              <textarea className='form-control'></textarea>
+              <textarea
+                className='form-control'
+                value={this.habit.description}
+                onChange={e => this.habit.description = e.target.value}
+              ></textarea>
             </div>
             <div className='mb-3'>
               <label className='form-label'>Every:</label>
               <div className="input-group">
-                <input className='form-control' type='number' step='1' min='0' value='1' />
-                <select className='form-select'>
+                <input
+                  className='form-control'
+                  type='number'
+                  step='1'
+                  min='0'
+                  value={this.habit.intervalCount}
+                  onChange={e => this.habit.intervalCount = e.target.value}
+                />
+                <select
+                  className='form-select'
+                  value={this.habit.intervalType}
+                  onChange={e => this.habit.intervalType = e.target.value}
+                >
                   <option>Hour(s)</option>
-                  <option selected>Day(s)</option>
+                  <option>Day(s)</option>
                   <option>Week(s)</option>
                   <option>Month(s)</option>
                   <option>Year(s)</option>
@@ -36,7 +67,15 @@ class Habit extends React.Component {
             </div>
             <div className='mb-3'>
               <label className='form-label'>At:</label>
-              <input className='form-control' type='time' />
+              <input
+                className='form-control'
+                type='time'
+                value={this.habit.time}
+                onChange={e => this.habit.time = e.target.value}
+              />
+            </div>
+            <div className="text-end">
+              <button type='submit' className='btn btn-primary'>Save</button>
             </div>
           </form>
         </section>
