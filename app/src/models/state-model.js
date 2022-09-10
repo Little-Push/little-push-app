@@ -1,3 +1,5 @@
+import { Client } from "./client.js";
+
 class StateModel {
     constructor (component, stateProperty) {
         this.component = component;
@@ -6,7 +8,6 @@ class StateModel {
     }
 
     _set (field, value) {
-        console.log({ field, value });
         this.data[field] = value;
         this.component.setState({
             [this.stateProperty]: this.data
@@ -21,7 +22,16 @@ class StateModel {
         const [ hours, minutes ] = value.split(':');
         date.setHours(hours);
         date.setMinutes(minutes);
-        return date.toLocaleTimeString('en-US', { hour12: false });
+        return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute:'2-digit' });
+    }
+
+    save () {
+        const slug = this.constructor.name.replace(/Model$/, '').replaceAll(/([A-Z])/g, '-$1').replace(/^-/, '').toLowerCase()
+        if (this.data.id) {
+            return Client.put(slug, this.data)
+        } else {
+            return Client.post(slug, this.data)
+        }
     }
 }
 

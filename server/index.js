@@ -3,6 +3,7 @@ import { Auth } from './auth.js';
 import * as dotenv from 'dotenv';
 import { resolve } from 'path';
 import session from 'express-session';
+import { Database } from './database.js';
 
 const path = resolve(process.cwd(), '../.env');
 dotenv.config({
@@ -23,9 +24,16 @@ if (process.env.NODE_ENV === 'production') {
     sessionSettings.cookie.secure = true
 }
 
+const database = new Database()
 app.use(session(sessionSettings))
+app.use(Express.json())
 
 new Auth(app);
+
+app.post('/api/habit', (req, res) => {
+    database.insert('habit', req.body)
+    return res.json({ data: req.body });
+})
 
 app.use(Express.static(resolve(process.cwd(), '../app/build/')));
 

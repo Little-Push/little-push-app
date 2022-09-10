@@ -1,4 +1,5 @@
 import React from 'react';
+import { Client } from './models/client.js';
 import { HabitModel } from './models/habit.js';
 
 class Habit extends React.Component {
@@ -22,7 +23,14 @@ class Habit extends React.Component {
       <>
         <section className='d-flex flex-column justify-content-center align-items-center'>
           <h1>New Habit</h1>
-          <form className='col-3'>
+          <form
+            className='col-3'
+            onSubmit={async e => {
+              e.preventDefault()
+              const response = await this.habit.save()
+              console.log({ response })
+            }}
+          >
             <div className='mb-3'>
               <label className='form-label'>Habit:</label>
               <input

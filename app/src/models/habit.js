@@ -43,7 +43,6 @@ class HabitModel extends StateModel {
     }
 
     set time (value) {
-        console.log({ value });
         this._set('time', this._time(value));
     }
 
