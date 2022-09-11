@@ -3,6 +3,9 @@ import passport from 'passport';
 
 class Auth {
     constructor (app) {
+        app.use(passport.initialize())
+        app.use(passport.session())
+
         passport.use(
             new OpenIDConnectStrategy(
                 {
@@ -17,6 +20,7 @@ class Auth {
                 },
                 (issuer, profile, cb) => {
                     const user = {
+                        id: profile?.id ?? null,
                         name: profile?.displayName ?? null,
                         email: profile?.emails?.[0]?.value ?? null
                     };

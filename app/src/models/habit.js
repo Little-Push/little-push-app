@@ -3,11 +3,11 @@ import { StateModel } from "./state-model.js";
 class HabitModel extends StateModel {
     constructor (...args) {
         super(...args);
-        this.name = ''
-        this.description = ''
-        this.intervalCount = 1
-        this.intervalType = 'Days(s)';
-        this.time = ''
+        this.name = this.data.name ?? ''
+        this.description = this.data.description ?? ''
+        this.intervalCount = this.data.intervalCount ?? 1
+        this.intervalType = this.data.intervalType ?? 'Days(s)';
+        this.time = this.data.time ?? ''
     }
 
     set name (value) {
@@ -48,6 +48,14 @@ class HabitModel extends StateModel {
 
     get time () {
         return this.data.time;
+    }
+
+    set userId (value) {
+        this._set('userId', value);
+    }
+
+    get userId () {
+        return this.data.userId;
     }
 }
 

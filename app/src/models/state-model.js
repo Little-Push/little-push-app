@@ -1,10 +1,10 @@
 import { Client } from "./client.js";
 
 class StateModel {
-    constructor (component, stateProperty) {
+    constructor (data, component, stateProperty) {
         this.component = component;
         this.stateProperty = stateProperty;
-        this.data = {};
+        this.data = data;
     }
 
     _set (field, value) {

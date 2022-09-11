@@ -12,7 +12,7 @@ class Habit extends React.Component {
   }
 
   componentDidMount () {
-    this.habit = new HabitModel(this, 'habit');
+    this.habit = new HabitModel({}, this, 'habit');
   }
 
   render () {

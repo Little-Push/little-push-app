@@ -1,23 +1,27 @@
 class Client {
     static async put (slug, data) {
-        const request = await fetch(`/api/${slug}`, {
-            method: 'PUT',
-            body: JSON.stringify([data]),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        return request.json()
+        return this._request('PUT', slug, data);
     }
 
     static async post (slug, data) {
-        const request = await fetch(`/api/${slug}`, {
-            method: 'POST',
-            body: JSON.stringify([data]),
+        return this._request('POST', slug, data);
+    }
+
+    static async _request (method, slug, data) {
+        const config = {
+            method: method,
             headers: {
                 'Content-Type': 'application/json'
-            }
-        })
+            },
+            credentials: 'include'
+        }
+        if (data) {
+            config.body = JSON.stringify([data])
+        }
+        const request = await fetch(`/api/${slug}`, config)
+        if (request.status === 403) {
+            window.location.replace('/login')
+        }
         return request.json()
     }
 }
