@@ -3,7 +3,12 @@ const { Pool } = pg.default
 
 class Database {
     constructor () {
-        this.pool = new Pool()
+        this.pool = new Pool({
+            user: process.env.DATABASE_USER,
+            database: process.env.DATABASE_NAME,
+            password: process.env.DATABASE_PASSWORD,
+            host: process.env.DATABASE_HOST
+        })
     }
 
     async insert (table, data) {

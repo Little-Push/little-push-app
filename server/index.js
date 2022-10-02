@@ -5,7 +5,7 @@ import { resolve } from 'path';
 import session from 'express-session';
 import { Database } from './database.js';
 
-const path = resolve(process.cwd(), '../.env');
+const path = (new URL('../.env', import.meta.url)).href.replace(/^file:\/\/\//, '');
 dotenv.config({
     path
 });
